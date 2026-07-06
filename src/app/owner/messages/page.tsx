@@ -9,7 +9,7 @@ export default function MessagesPage() {
       <DashboardShell eyebrow="Warehouse owner workspace" title="Messages">
         <p className="muted" style={{ marginBottom: '24px' }}>Communicate directly with verified leads and active tenants.</p>
         
-        <div style={{ display: 'grid', gridTemplateColumns: '300px 1fr', gap: '24px', height: '60vh' }}>
+        <div className="messages-layout">
           <div className="panel" style={{ padding: 0, overflowY: 'auto' }}>
             {['FreshCart Foods', 'UrbanKart', 'Medline Supply', 'LogiTech Solutions'].map((name, i) => (
               <div key={i} style={{ padding: '16px', borderBottom: '1px solid var(--line)', background: i === 0 ? 'var(--accent-soft)' : 'transparent', cursor: 'pointer' }}>

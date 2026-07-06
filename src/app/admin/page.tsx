@@ -32,34 +32,36 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Warehouse</th>
-              <th>Owner</th>
-              <th>City</th>
-              <th>Documents</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {[
-              ["Pune Pharma Vault", "Sahyadri Logistics", "Pune", "5 uploaded", "Under review"],
-              ["Jaipur Dry Storage", "Northwest Parks", "Jaipur", "3 uploaded", "Changes needed"],
-              ["Chennai Port Yard", "Bayline Infra", "Chennai", "6 uploaded", "Ready"],
-            ].map((row) => (
-              <tr key={row[0]}>
-                <td>{row[0]}</td>
-                <td>{row[1]}</td>
-                <td>{row[2]}</td>
-                <td>{row[3]}</td>
-                <td>
-                  <span className="status green">{row[4]}</span>
-                </td>
+        <div className="table-scroll">
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Warehouse</th>
+                <th>Owner</th>
+                <th>City</th>
+                <th>Documents</th>
+                <th>Status</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {[
+                ["Pune Pharma Vault", "Sahyadri Logistics", "Pune", "5 uploaded", "Under review"],
+                ["Jaipur Dry Storage", "Northwest Parks", "Jaipur", "3 uploaded", "Changes needed"],
+                ["Chennai Port Yard", "Bayline Infra", "Chennai", "6 uploaded", "Ready"],
+              ].map((row) => (
+                <tr key={row[0]}>
+                  <td>{row[0]}</td>
+                  <td>{row[1]}</td>
+                  <td>{row[2]}</td>
+                  <td>{row[3]}</td>
+                  <td>
+                    <span className="status green">{row[4]}</span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </DashboardShell>
     </div>
   );

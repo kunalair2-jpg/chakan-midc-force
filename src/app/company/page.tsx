@@ -32,34 +32,36 @@ export default function CompanyDashboard() {
           </div>
         </div>
 
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Warehouse</th>
-              <th>Area</th>
-              <th>Monthly rent</th>
-              <th>Valid until</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {[
-              ["Cold Chain Hub", "18,000 sq ft", "₹12.9L", "04 Jul", "Received"],
-              ["Fulfillment Park", "28,000 sq ft", "₹13.7L", "06 Jul", "Viewed"],
-              ["Industrial Yard", "50,000 sq ft", "₹17.0L", "08 Jul", "Negotiating"],
-            ].map((row) => (
-              <tr key={row[0]}>
-                <td>{row[0]}</td>
-                <td>{row[1]}</td>
-                <td>{row[2]}</td>
-                <td>{row[3]}</td>
-                <td>
-                  <span className="status blue">{row[4]}</span>
-                </td>
+        <div className="table-scroll">
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Warehouse</th>
+                <th>Area</th>
+                <th>Monthly rent</th>
+                <th>Valid until</th>
+                <th>Status</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {[
+                ["Cold Chain Hub", "18,000 sq ft", "₹12.9L", "04 Jul", "Received"],
+                ["Fulfillment Park", "28,000 sq ft", "₹13.7L", "06 Jul", "Viewed"],
+                ["Industrial Yard", "50,000 sq ft", "₹17.0L", "08 Jul", "Negotiating"],
+              ].map((row) => (
+                <tr key={row[0]}>
+                  <td>{row[0]}</td>
+                  <td>{row[1]}</td>
+                  <td>{row[2]}</td>
+                  <td>{row[3]}</td>
+                  <td>
+                    <span className="status blue">{row[4]}</span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </DashboardShell>
     </div>
   );

@@ -250,6 +250,78 @@ export default function NewWarehousePage() {
           animation: spin 1s linear infinite;
         }
         @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        .wizard-actions {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-top: 40px;
+          padding-top: 24px;
+          border-top: 1px solid #e2e8f0;
+          gap: 16px;
+          flex-wrap: wrap;
+        }
+        .wizard-actions-buttons {
+          display: flex;
+          gap: 16px;
+        }
+
+        .photo-preview-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 16px;
+          margin-top: 16px;
+        }
+
+        @media (max-width: 720px) {
+          .form-panel {
+            padding: 24px;
+          }
+          .step-label {
+            font-size: 11px;
+          }
+          .checkbox-grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
+          .photo-preview-grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
+        }
+
+        @media (max-width: 560px) {
+          .form-panel {
+            padding: 18px;
+          }
+          .stepper {
+            padding: 0 2px;
+          }
+          .step-item {
+            width: auto;
+            gap: 6px;
+          }
+          .step-circle {
+            width: 36px;
+            height: 36px;
+          }
+          .stepper::before,
+          .stepper-progress {
+            top: 18px;
+          }
+          .step-label {
+            display: none;
+          }
+          .wizard-actions {
+            flex-direction: column-reverse;
+            align-items: stretch;
+          }
+          .wizard-actions-buttons {
+            flex-direction: column;
+            width: 100%;
+          }
+          .wizard-actions-buttons button {
+            width: 100%;
+          }
+        }
       `}</style>
       <main className="container section" style={{ maxWidth: '840px' }}>
         <div className="section-head" style={{ marginBottom: '32px' }}>
@@ -509,7 +581,7 @@ export default function NewWarehousePage() {
             </label>
             
             {imagePreviews.length > 0 && (
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px', marginTop: '16px' }}>
+              <div className="photo-preview-grid">
                  {imagePreviews.map((url, i) => (
                    <div key={i} style={{ aspectRatio: '4/3', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
                      <img src={url} alt={`Preview ${i + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
@@ -519,7 +591,7 @@ export default function NewWarehousePage() {
             )}
           </div>
           
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '40px', paddingTop: '24px', borderTop: '1px solid #e2e8f0' }}>
+          <div className="wizard-actions">
             {currentStep > 1 ? (
               <button type="button" className="secondary" onClick={handlePrev} style={{ padding: '14px 24px', borderRadius: '12px' }}>
                 <ArrowLeft size={18} style={{ marginRight: '8px' }} /> Back
@@ -528,7 +600,7 @@ export default function NewWarehousePage() {
               <div></div> // Empty div for flex spacing
             )}
 
-            <div style={{ display: 'flex', gap: '16px' }}>
+            <div className="wizard-actions-buttons">
               <button 
                 type="submit"
                 name="actionType"

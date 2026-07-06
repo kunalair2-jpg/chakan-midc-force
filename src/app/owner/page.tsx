@@ -45,38 +45,40 @@ export default async function OwnerDashboard() {
           </Link>
         </div>
 
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Company</th>
-              <th>Warehouse</th>
-              <th>Area</th>
-              <th>Need</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {bookingRequests.length > 0 ? bookingRequests.map((req: any) => (
-              <tr key={req.id}>
-                <td>{req.company_name}</td>
-                <td>{req.warehouse_title}</td>
-                <td>{req.area_requested.toLocaleString()} sq ft</td>
-                <td>{req.storage_type}</td>
-                <td>
-                  <span className={`status ${req.status === 'Pending' ? 'gold' : 'green'}`}>
-                    {req.status}
-                  </span>
-                </td>
-              </tr>
-            )) : (
+        <div className="table-scroll">
+          <table className="table">
+            <thead>
               <tr>
-                <td colSpan={5} style={{ textAlign: "center", color: "#64748b", padding: "32px" }}>
-                  No booking requests yet.
-                </td>
+                <th>Company</th>
+                <th>Warehouse</th>
+                <th>Area</th>
+                <th>Need</th>
+                <th>Status</th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {bookingRequests.length > 0 ? bookingRequests.map((req: any) => (
+                <tr key={req.id}>
+                  <td>{req.company_name}</td>
+                  <td>{req.warehouse_title}</td>
+                  <td>{req.area_requested.toLocaleString()} sq ft</td>
+                  <td>{req.storage_type}</td>
+                  <td>
+                    <span className={`status ${req.status === 'Pending' ? 'gold' : 'green'}`}>
+                      {req.status}
+                    </span>
+                  </td>
+                </tr>
+              )) : (
+                <tr>
+                  <td colSpan={5} style={{ textAlign: "center", color: "#64748b", padding: "32px" }}>
+                    No booking requests yet.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </DashboardShell>
     </div>
   );

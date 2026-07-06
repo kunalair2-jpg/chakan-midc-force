@@ -121,6 +121,11 @@ img {
   display: flex;
   align-items: center;
   gap: 8px;
+  flex-wrap: wrap;
+}
+
+.nav .nav-actions {
+  justify-content: flex-end;
 }
 
 .icon-btn,
@@ -703,8 +708,15 @@ img {
   margin-top: 8px;
 }
 
+.table-scroll {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: 18px;
+}
+
 .table {
   width: 100%;
+  min-width: 640px;
   border-collapse: collapse;
   overflow: hidden;
   border-radius: 18px;
@@ -749,6 +761,13 @@ img {
 .status.blue {
   color: var(--blue);
   background: #e8f1fb;
+}
+
+.messages-layout {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 24px;
+  height: 60vh;
 }
 
 .form-grid {
@@ -860,6 +879,15 @@ img {
   .sidebar a {
     flex: 0 0 auto;
   }
+
+  .dashboard-main {
+    padding: 20px;
+  }
+
+  .messages-layout {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
 }
 
 @media (max-width: 680px) {
@@ -871,11 +899,16 @@ img {
     height: auto;
     padding: 12px 0;
     flex-wrap: wrap;
+    row-gap: 10px;
   }
 
-  .nav-search {
-    order: 3;
-    min-width: 100%;
+  .nav .nav-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .brand span:last-child {
+    font-size: 15px;
   }
 
   .hero-copy h1 {
@@ -908,5 +941,18 @@ img {
 
   .photo-stack {
     display: none;
+  }
+
+  .detail-title h1 {
+    font-size: 26px;
+  }
+
+  .section h2 {
+    font-size: 24px;
+  }
+
+  .section-head {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
