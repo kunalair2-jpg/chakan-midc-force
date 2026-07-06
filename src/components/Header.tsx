@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { Building2, Menu, Search, UserRound, Heart } from "lucide-react";
+import { Building2, Menu, UserRound, Heart } from "lucide-react";
 import { useWishlist } from "@/lib/WishlistContext";
 
 export function Header() {
@@ -14,13 +14,6 @@ export function Header() {
             <Building2 size={21} />
           </span>
           <span>Chakan MIDC Force</span>
-        </Link>
-
-        <Link className="nav-search" href="/warehouses">
-          <span>Search city, storage type, area</span>
-          <span className="search-btn" aria-label="Search warehouses">
-            <Search size={18} />
-          </span>
         </Link>
 
         <nav className="nav-actions">
