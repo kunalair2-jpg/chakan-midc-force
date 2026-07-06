@@ -613,6 +613,12 @@ export default function NewWarehousePage() {
                   if (form && !form.checkValidity()) {
                     e.preventDefault();
                     form.reportValidity();
+                    return;
+                  }
+                  if (fileCount === 0) {
+                    e.preventDefault();
+                    setErrorMessage("Please upload at least one photo of the warehouse space before saving. Go to the Photos step to add one.");
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
                   }
                 }}
               >

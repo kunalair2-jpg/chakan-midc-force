@@ -49,13 +49,11 @@ export async function addWarehouseAction(formData: FormData) {
     throw new Error("Image upload failed: " + uploadErrors.join("; "));
   }
 
-  // Fallback to stock images if none uploaded
-  const finalImages = uploadedImageUrls.length > 0 
-    ? uploadedImageUrls 
-    : [
-        "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1200&q=80",
-        "https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=900&q=80"
-      ];
+  if (uploadedImageUrls.length === 0) {
+    throw new Error("At least one warehouse photo is required before this listing can be saved.");
+  }
+
+  const finalImages = uploadedImageUrls;
 
   const newWarehouse: Warehouse = {
     slug,
