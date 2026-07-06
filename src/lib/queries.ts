@@ -1,8 +1,8 @@
-import { createClient } from "@/utils/supabase/server";
+import { createPublicClient } from "@/utils/supabase/public";
 import { Warehouse } from "./warehouses";
 
 export async function getWarehouses(): Promise<Warehouse[]> {
-  const supabase = await createClient();
+  const supabase = createPublicClient();
   const { data, error } = await supabase
     .from("warehouses")
     .select("*")
@@ -16,7 +16,7 @@ export async function getWarehouses(): Promise<Warehouse[]> {
 }
 
 export async function getWarehouse(slug: string): Promise<Warehouse | null> {
-  const supabase = await createClient();
+  const supabase = createPublicClient();
   const { data, error } = await supabase
     .from("warehouses")
     .select("*")
