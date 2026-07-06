@@ -25,9 +25,13 @@ export async function addWarehouseAction(formData: FormData) {
       const fileExt = file.name.split('.').pop();
       const fileName = `${slug}-${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
 
+      const fileBuffer = await file.arrayBuffer();
+
       const { data, error } = await supabaseAdmin.storage
         .from("warehouse-images")
-        .upload(fileName, file);
+        .upload(fileName, fileBuffer, {
+          contentType: file.type,
+        });
 
       if (!error && data) {
         const { data: { publicUrl } } = supabaseAdmin.storage
