@@ -632,6 +632,19 @@ export default function NewWarehousePage() {
                   className="primary"
                   disabled={status !== "idle"}
                   style={{ padding: '14px 28px', borderRadius: '12px', background: 'linear-gradient(135deg, #1f6feb, #0c4a6e)', border: 'none', boxShadow: '0 12px 24px rgba(31, 111, 235, 0.25)' }}
+                  onClick={(e) => {
+                    const form = e.currentTarget.closest("form");
+                    if (form && !form.checkValidity()) {
+                      e.preventDefault();
+                      form.reportValidity();
+                      return;
+                    }
+                    if (fileCount === 0) {
+                      e.preventDefault();
+                      setErrorMessage("Please upload at least one photo of the warehouse space before submitting.");
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
+                  }}
                 >
                   {status === "loading-submit" ? <Loader2 size={18} className="animate-spin" style={{ marginRight: '8px' }} /> : null}
                   Submit Listing
