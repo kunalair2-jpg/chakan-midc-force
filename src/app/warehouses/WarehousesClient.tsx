@@ -16,6 +16,9 @@ function WarehousesContent({ initialWarehouses }: { initialWarehouses: Warehouse
   const searchParams = useSearchParams();
   const searchLocation = searchParams.get("location")?.toLowerCase() || "";
   const searchCategory = searchParams.get("category");
+  const searchAreaRaw = searchParams.get("area");
+  const searchArea = searchAreaRaw ? parseInt(searchAreaRaw.replace(/[^0-9]/g, ""), 10) : null;
+  const searchDate = searchParams.get("date");
 
   const [filters, setFilters] = useState<FiltersState>(() => {
     if (searchCategory && searchCategory !== "All") {
@@ -41,6 +44,18 @@ function WarehousesContent({ initialWarehouses }: { initialWarehouses: Warehouse
 
     if (filters.monthlyRentMin > defaultFilters.monthlyRentMin || filters.monthlyRentMax < defaultFilters.monthlyRentMax) {
       if (w.price < filters.monthlyRentMin || w.price > filters.monthlyRentMax) matches = false;
+    }
+
+    if (searchArea && !isNaN(searchArea)) {
+      if (w.available < searchArea) matches = false;
+    }
+
+    if (searchDate) {
+      const requested = new Date(searchDate);
+      const availableFrom = new Date(w.specs.availableFrom);
+      if (!isNaN(requested.getTime()) && !isNaN(availableFrom.getTime()) && availableFrom > requested) {
+        matches = false;
+      }
     }
 
     if (mapFilteredSlugs !== null) {

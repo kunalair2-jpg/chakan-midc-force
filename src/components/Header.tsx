@@ -1,10 +1,30 @@
 "use client";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { Building2, Menu, UserRound, Heart } from "lucide-react";
+import { Building2, Menu, UserRound, Heart, Warehouse, Building, ShieldCheck } from "lucide-react";
 import { useWishlist } from "@/lib/WishlistContext";
+
+const workspaces = [
+  { label: "Owner workspace", href: "/owner", icon: Warehouse },
+  { label: "Company workspace", href: "/company", icon: Building },
+  { label: "Admin console", href: "/admin", icon: ShieldCheck },
+];
 
 export function Header() {
   const { wishlistSlugs } = useWishlist();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const handleClickOutside = (e: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setMenuOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [menuOpen]);
 
   return (
     <header className="topbar">
@@ -31,12 +51,29 @@ export function Header() {
               </span>
             )}
           </Link>
-          <button className="icon-btn" aria-label="Open menu">
-            <Menu size={20} />
-          </button>
-          <button className="icon-btn" aria-label="User profile">
+          <div ref={menuRef} style={{ position: 'relative' }}>
+            <button
+              className="icon-btn"
+              aria-label="Open menu"
+              aria-expanded={menuOpen}
+              onClick={() => setMenuOpen((open) => !open)}
+            >
+              <Menu size={20} />
+            </button>
+            {menuOpen && (
+              <div className="nav-dropdown">
+                {workspaces.map(({ label, href, icon: Icon }) => (
+                  <Link key={href} href={href} onClick={() => setMenuOpen(false)}>
+                    <Icon size={16} />
+                    {label}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+          <Link className="icon-btn" href="/owner/settings" aria-label="Account settings">
             <UserRound size={20} />
-          </button>
+          </Link>
         </nav>
       </div>
     </header>
