@@ -9,7 +9,7 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Warehouse Finder | Warehouse Marketplace",
+  title: "Chakan MIDC Force",
   description: "Find, compare, request, and book verified warehouse space.",
 };
 

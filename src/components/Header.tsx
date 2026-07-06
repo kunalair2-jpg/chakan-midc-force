@@ -13,7 +13,7 @@ export function Header() {
           <span className="brand-mark">
             <Building2 size={21} />
           </span>
-          <span>Warehouse Finder</span>
+          <span>Chakan MIDC Force</span>
         </Link>
 
         <Link className="nav-search" href="/warehouses">

@@ -13,7 +13,7 @@ export default function SettingsPage() {
             
             <label style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '14px', fontWeight: 700 }}>
               Company Name
-              <input type="text" defaultValue="SpaceDock Logistics Partners" style={{ padding: '12px', borderRadius: '8px', border: '1px solid var(--line)' }} />
+              <input type="text" defaultValue="Chakan MIDC Force Partners" style={{ padding: '12px', borderRadius: '8px', border: '1px solid var(--line)' }} />
             </label>
             
             <label style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '14px', fontWeight: 700 }}>
@@ -23,7 +23,7 @@ export default function SettingsPage() {
             
             <label style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '14px', fontWeight: 700 }}>
               Primary Contact Email
-              <input type="email" defaultValue="owner@spacedock.com" style={{ padding: '12px', borderRadius: '8px', border: '1px solid var(--line)' }} />
+              <input type="email" defaultValue="owner@chakanmidcforce.com" style={{ padding: '12px', borderRadius: '8px', border: '1px solid var(--line)' }} />
             </label>
 
             <h3 style={{ margin: '24px 0 16px 0', borderBottom: '1px solid var(--line)', paddingBottom: '12px' }}>Payout Details</h3>
