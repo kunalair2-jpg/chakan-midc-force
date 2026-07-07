@@ -5,6 +5,12 @@ const supabaseHostname = process.env.NEXT_PUBLIC_SUPABASE_URL
   : undefined;
 
 const nextConfig: NextConfig = {
+  experimental: {
+    // Default is 1MB; the listing form uploads multiple photos up to 5MB each.
+    serverActions: {
+      bodySizeLimit: "25mb",
+    },
+  },
   images: {
     remotePatterns: [
       {

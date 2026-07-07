@@ -53,7 +53,12 @@ export async function addWarehouseAction(formData: FormData) {
     throw new Error("At least one warehouse photo is required before this listing can be saved.");
   }
 
-  const finalImages = uploadedImageUrls;
+  // Move the owner's chosen thumbnail to the front; `image` (used as the
+  // card cover everywhere) is always finalImages[0].
+  const thumbnailIndex = Number(formData.get("thumbnailIndex")) || 0;
+  const finalImages = uploadedImageUrls[thumbnailIndex]
+    ? [uploadedImageUrls[thumbnailIndex], ...uploadedImageUrls.filter((_, i) => i !== thumbnailIndex)]
+    : uploadedImageUrls;
 
   const newWarehouse: Warehouse = {
     slug,

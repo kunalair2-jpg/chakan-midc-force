@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
-import { CheckCircle2, Loader2, ArrowLeft, ArrowRight, Save, Building2, MapPin, Ruler, Zap, IndianRupee, Image as ImageIcon, UploadCloud } from "lucide-react";
+import { CheckCircle2, Loader2, ArrowLeft, ArrowRight, Save, Building2, MapPin, Ruler, Zap, IndianRupee, Image as ImageIcon, UploadCloud, Star } from "lucide-react";
 import { Header } from "@/components/Header";
 import { categories } from "@/lib/warehouses";
 import { addWarehouseAction } from "@/app/actions";
@@ -21,9 +21,17 @@ export default function NewWarehousePage() {
   const [status, setStatus] = useState<"idle" | "loading-draft" | "loading-submit" | "success-draft" | "success-submit">("idle");
   const [fileCount, setFileCount] = useState(0);
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
+  const [thumbnailIndex, setThumbnailIndex] = useState(0);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  // React state updates aren't synchronous, so `disabled={status !== "idle"}`
+  // alone leaves a window where a fast double-click fires the action twice
+  // before the button actually disables. A ref flips instantly.
+  const isSubmittingRef = useRef(false);
 
   const handleFormAction = async (formData: FormData) => {
+    if (isSubmittingRef.current) return;
+    isSubmittingRef.current = true;
+
     const type = formData.get("actionType") === "draft" ? "draft" : "submit";
     setStatus(type === "draft" ? "loading-draft" : "loading-submit");
     setErrorMessage(null);
@@ -36,6 +44,7 @@ export default function NewWarehousePage() {
       console.error(error);
       setErrorMessage(error instanceof Error ? error.message : "Something went wrong. Please try again.");
       setStatus("idle");
+      isSubmittingRef.current = false;
     }
   };
 
@@ -89,7 +98,7 @@ export default function NewWarehousePage() {
             <Link href="/owner" className="secondary" style={{ padding: '14px 24px', borderRadius: '12px' }}>
               <ArrowLeft size={18} /> Back to Dashboard
             </Link>
-            <button className="primary" onClick={() => { setStatus("idle"); setCurrentStep(1); }} style={{ padding: '14px 24px', borderRadius: '12px' }}>
+            <button className="primary" onClick={() => { isSubmittingRef.current = false; setStatus("idle"); setCurrentStep(1); }} style={{ padding: '14px 24px', borderRadius: '12px' }}>
               {isDraft ? "Continue Editing" : "Add Another Space"}
             </button>
           </div>
@@ -570,24 +579,41 @@ export default function NewWarehousePage() {
                       imagePreviews.forEach(url => URL.revokeObjectURL(url));
                       const newPreviews = Array.from(files).map(file => URL.createObjectURL(file));
                       setImagePreviews(newPreviews);
+                      setThumbnailIndex(0);
                     }
                   }}
                 />
-                
+
                 <span className="secondary" style={{ marginTop: '8px', padding: '10px 20px', borderRadius: '12px', border: '1px solid #cbd5e1', display: 'inline-block' }}>
                   {fileCount > 0 ? `${fileCount} file(s) selected` : "Browse Files"}
                 </span>
               </div>
             </label>
-            
+
+            <input type="hidden" name="thumbnailIndex" value={thumbnailIndex} />
+
             {imagePreviews.length > 0 && (
-              <div className="photo-preview-grid">
-                 {imagePreviews.map((url, i) => (
-                   <div key={i} style={{ aspectRatio: '4/3', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
-                     <img src={url} alt={`Preview ${i + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                   </div>
-                 ))}
-              </div>
+              <>
+                <p style={{ margin: '4px 0 0 0', color: '#64748b', fontSize: '13px' }}>Click the star on a photo to make it the listing thumbnail.</p>
+                <div className="photo-preview-grid">
+                   {imagePreviews.map((url, i) => (
+                     <div key={i} style={{ position: 'relative', aspectRatio: '4/3', borderRadius: '12px', overflow: 'hidden', border: i === thumbnailIndex ? '2px solid #1f6feb' : '1px solid #e2e8f0' }}>
+                       <img src={url} alt={`Preview ${i + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                       <button
+                         type="button"
+                         onClick={() => setThumbnailIndex(i)}
+                         title={i === thumbnailIndex ? "Thumbnail" : "Set as thumbnail"}
+                         style={{ position: 'absolute', top: '8px', right: '8px', width: '32px', height: '32px', borderRadius: '50%', border: 'none', background: i === thumbnailIndex ? '#1f6feb' : 'rgba(15, 23, 42, 0.55)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}
+                       >
+                         <Star size={16} fill={i === thumbnailIndex ? "white" : "none"} />
+                       </button>
+                       {i === thumbnailIndex && (
+                         <span style={{ position: 'absolute', bottom: '8px', left: '8px', background: '#1f6feb', color: 'white', fontSize: '11px', fontWeight: 700, padding: '3px 8px', borderRadius: '999px' }}>Thumbnail</span>
+                       )}
+                     </div>
+                   ))}
+                </div>
+              </>
             )}
           </div>
           

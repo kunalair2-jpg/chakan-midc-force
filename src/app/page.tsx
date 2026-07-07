@@ -7,6 +7,11 @@ import { WarehouseCard } from "@/components/WarehouseCard";
 import { categories } from "@/lib/warehouses";
 import { getWarehouses } from "@/lib/queries";
 
+// ISR: Supabase gets hit at most once per minute instead of on every
+// request; addWarehouseAction already calls revalidatePath("/") so new
+// listings still show up immediately without waiting for this window.
+export const revalidate = 60;
+
 export default async function Home() {
   const warehouses = await getWarehouses();
   return (

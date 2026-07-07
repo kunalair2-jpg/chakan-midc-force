@@ -10,6 +10,8 @@ import { DynamicWarehouseMap } from "@/components/DynamicWarehouseMap";
 import { categories } from "@/lib/warehouses";
 import { getWarehouse, getWarehouses } from "@/lib/queries";
 
+export const revalidate = 60;
+
 export async function generateStaticParams() {
   const warehouses = await getWarehouses();
   return warehouses.map((warehouse) => ({ slug: warehouse.slug }));
